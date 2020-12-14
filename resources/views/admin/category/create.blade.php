@@ -13,7 +13,7 @@
                         {!! Form::label('Thumbnail') !!}
                         {!! Form::text('thumbnail', null, ['class'=>'form-control', 'placeholder'=> 'thumbnail']) !!}
 
-                        @if($errors-has('thumbnail'))
+                        @if($errors->has('thumbnail'))
                           <span class="help-desk">{!! $errors->first('thumbnail') !!} </span>
                           @endif
                     </div>
@@ -22,8 +22,8 @@
                         {!! Form::label('name') !!}
                         {!! Form::text('name', null, ['class'=>'form-control', 'placeholder'=> 'Name']) !!}
 
-                        @if($errors-has('name'))
-                          <span class="help-desk">{!! $errors->first('thumbnail') !!} </span>
+                        @if($errors->has('name'))
+                          <span class="help-desk">{!! $errors->first('name') !!} </span>
                           @endif
                     </div>
 

@@ -48,10 +48,12 @@ class categoryController extends Controller
 
                 'thumbnail' => 'required',
                 'name' => 'required|unique:categories'
-        ], 
+        ]
+    ,
 
-        [
-            'thumbnail.required' => 'Enter thumbnail url',
+        [  //here is a customized message for our errors..instea of the default porvided by laravel
+
+            'thumbnail.required' => 'Enter thumbnail  url',
             'name.required' => 'Enter your name. Name field is empty',
             'name.unique' => 'Category already exist'
         ]);
@@ -63,11 +65,12 @@ class categoryController extends Controller
         $cat->user_id= Auth::id();
         $cat->name = $request->name;
         $cat->slug = str_slug($request->slug);
+        
         $cat->is_published = $request->is_published;
         $cat->save();
 
         Session::flash('msg', 'Category has been created successfully');
-        return redirect()->route('categoriess.index');
+        return redirect()->route('categories.index');
 
     }
 
