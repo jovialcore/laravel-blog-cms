@@ -13,7 +13,8 @@ class pageController extends Controller
      */
     public function index()
     {
-        //
+        $categories = category::orderBy('id', 'DESC')->get();
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -23,7 +24,7 @@ class pageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
