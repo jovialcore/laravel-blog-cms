@@ -27,11 +27,11 @@
 	                                  <td> {{ $category->name }} </td>
 	                                  <td> {{ $category->user->name }} </td>
 	                                  <td>
-                                     <a href=" {{ route('categories.edit', $category->id) }}" class="btn btn-outline-dark text-dark btn-primary"> Edit </a>
+                                     <a href=" {{ route('categories.edit', $category->id) }}" class="btn btn-outline-dark text-dark btn-success btn-sm"> Edit </a>
 
                                      {!! Form::open(['route' => ['categories.destroy', $category->id], 'method' => 'delete', 'style'=> 'display:inline']) !!} 
 
-                                     {!! Form::submit('Delete', ['class' => 'btn btn-sm', 'style' => 'background-color:red']) !!}
+                                     {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger ']) !!}
 
                                      {!! Form::close() !!}
                                     </td>

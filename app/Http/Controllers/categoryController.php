@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
-class pageController extends Controller
+
+use App\category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
+class categoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -49,7 +54,7 @@ class pageController extends Controller
             'thumbnail.required' => 'Enter thumbnail url',
             'name.required' => 'Enter your name. Name field is empty',
             'name.unique' => 'Category already exist'
-        ])
+        ]);
 
         //lets work set session for this 
 
