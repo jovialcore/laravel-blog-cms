@@ -65,7 +65,7 @@
                 <h2 class="category-title">Category</h2>
                 <ul class="category-list">
                       @foreach($cat as $cats)
-                        <li><a href="{{ url('category/'. $cate->slug) }}">{{ $cats->name }}</a></li>
+                        <li><a href="{{ url('category/'. $cats->slug) }}">{{ $cats->name }}</a></li>
                       @endforeach
                 </ul>
             </div>

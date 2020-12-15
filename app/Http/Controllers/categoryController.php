@@ -93,9 +93,11 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(category $category)
     {
-        //
+        return view('admin.category.edit', compact('category'));
+
+        Session::flash('update-msg', 'Omo.. your stuff have been updated ...!');
     }
 
     /**
@@ -118,6 +120,8 @@ class categoryController extends Controller
      */
     public function destroy(category $category)
     {
+        //refer to laravel doc to understand whats going on here:  Route Binding(Implicit Binding)
+        
         $category->delete();
         Session::flash('del-msg', 'Omo category has been removed o..omo!');
         return redirect()->route('categories.index');

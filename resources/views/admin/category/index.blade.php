@@ -10,6 +10,20 @@
               {{ Session('msg') }}
             </div>
             @endif
+
+              @if(Session::has('del-msg'))
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+              {{ Session('del-msg') }}
+            </div>
+            @endif
+
+               @if(Session::has('update-msg'))
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+              {{ Session('update-msg') }}
+            </div>
+            @endif
           </div>
         </div>
     <div class="row justify-content-center">
@@ -38,7 +52,7 @@
 	                                  <td> {{ $category->user->name }} </td>
 	                                  <td>
                                      <a href=" {{ route('categories.edit', $category->id) }}" class="btn btn-outline-dark text-dark btn-success btn-sm"> Edit</a>
-                                        <?php var_dump($category->id);  ?>
+                                        
                                      {!! Form::open(['route' => ['categories.destroy', $category->id], 'method' => 'delete', 'style'=> 'display:inline']) !!} 
 
                                      {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger ']) !!}
