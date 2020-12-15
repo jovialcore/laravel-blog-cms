@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
-
 use App\category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +40,10 @@ class categoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
+
     {
+        
         $this->validate($request, 
             [
 
@@ -51,7 +52,7 @@ class categoryController extends Controller
         ]
     ,
 
-        [  //here is a customized message for our errors..instea of the default porvided by laravel
+        [  //here is a customized message for our errors..instead of the default error message provided porvided by laravel
 
             'thumbnail.required' => 'Enter thumbnail  url',
             'name.required' => 'Enter your name. Name field is empty',
@@ -64,8 +65,9 @@ class categoryController extends Controller
         $cat->thumbnail = $request->thumbnail;
         $cat->user_id= Auth::id();
         $cat->name = $request->name;
-        $cat->slug = str_slug($request->slug);
-        
+        $cat->slug = str_slug($request->name);
+        var_dump($cat->slug);
+
         $cat->is_published = $request->is_published;
         $cat->save();
 
@@ -114,8 +116,10 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(category $category)
     {
-        //
+        $category->delete();
+        Session::flash('del-msg', 'Omo category has been removed o..omo!');
+        return redirect()->route('categories.index');
     }
 }
