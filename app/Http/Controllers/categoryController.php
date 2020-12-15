@@ -96,8 +96,6 @@ class categoryController extends Controller
     public function edit(category $category)
     {
         return view('admin.category.edit', compact('category'));
-
-        Session::flash('update-msg', 'Omo.. your stuff have been updated ...!');
     }
 
     /**
@@ -107,9 +105,32 @@ class categoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, category $category)
     {
-        //
+        $this->validate($request, [
+
+                'thumbnail' => 'required',
+                'name' =>  'required|unique:categories,name,'.$category->id,
+        ],
+            [
+                'thumbnail.required' => 'Enter thubnail please',
+                'name.required' => 'Enter your name, G',
+                'name.unique' => 'Category already exist',
+            ]
+    );
+
+        $category->thumbnail =  $request->thumbnail;
+        $category->user_id = Auth::id();
+        $category->name=  $request->name;
+        $category->slug = str_slug($request->name);
+        $category->is_published = $request->is_published;
+        $category->save();
+
+        Session::flash('update-msg', 'Omo.. your stuff have been updated ...!');
+
+        return redirect()->route('categories.index');
+        //omo so you must refer back to your the route in web.php that must hit the index method above..omo
+
     }
 
     /**
