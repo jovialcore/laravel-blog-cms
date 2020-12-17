@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 			Route::resource('categories', 'categoryController');
 			Route::resource('posts', 'postController'); Route::resource('pages',
-			'pageController'); Route::resource('galleries', 'galleryController');
+			'pageController'); 
+			Route::resource('galleries', 'galleryController');
 
 });

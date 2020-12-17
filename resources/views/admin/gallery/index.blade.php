@@ -24,8 +24,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Page - list
-                        <a href="{{ route('pages.create') }}" class="btn btn-sm btn-primary float-right">Add
+                        Gallery - list
+                        <a href="{{ route('galleries.create') }}" class="btn btn-sm btn-primary float-right">Add
                             New</a>
                     </div>
 
@@ -33,22 +33,22 @@
                         <table class="table table-bordered mb-0">
                             <thead>
                             <tr>
-                                <th scope="col" width="20">#</th>
-                                <th scope="col">Title</th>
+                                <th scope="col" width="60">#</th>
+                                <th scope="col">url</th>
                                 <th scope="col" width="200">Created By</th>
                                 <th scope="col" width="129">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($pages as $page)
+                            @foreach ($galleries as $gallery)
                                 <tr>
-                                    <th scope="row">{{ $page->id }}</th>
-                                    <td>{{ $page->title }}</td>
-                                    <td>{{ $page->user-name }}</td>
+                                    <th scope="row">{{ $gallery->id }}</th>
+                                    <td>{{ asset('storage/galleries/'. $gallery->image_url)}}</td>
+                                    <td>{{ $gallery->user->name }}</td>
                                     <td>
-                                        <a href="{{ route('pages.edit', $page->id) }}"
+                                        <a href="{{ route('galleries.edit', $gallery->id) }}"
                                            class="btn btn-sm btn-primary">Edit</a>
-                                        {!! Form::open(['route' => ['pages.destroy', $page->id], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                        {!! Form::open(['route' => ['galleries.destroy', $gallery->id], 'method' => 'delete', 'style' => 'display:inline']) !!}
                                         {!! Form::submit('Delete',['class' => 'btn btn-sm btn-danger']) !!}
                                         {!! Form::close() !!}
                                     </td>
