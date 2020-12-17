@@ -46,10 +46,9 @@
                                     <td>{{ asset('storage/galleries/'. $gallery->image_url)}}</td>
                                     <td>{{ $gallery->user->name }}</td>
                                     <td>
-                                        <a href="{{ route('galleries.edit', $gallery->id) }}"
-                                           class="btn btn-sm btn-primary">Edit</a>
+                                      
                                         {!! Form::open(['route' => ['galleries.destroy', $gallery->id], 'method' => 'delete', 'style' => 'display:inline']) !!}
-                                        {!! Form::submit('Delete',['class' => 'btn btn-sm btn-danger']) !!}
+                                        {!! Form::submit('Delete',['class' => 'btn btn-block btn-danger']) !!}
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
