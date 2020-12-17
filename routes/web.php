@@ -36,8 +36,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 			Route::resource('categories', 'categoryController');
-			Route::resource('posts', 'postController');
-			Route::resource('pages', 'pagesController');
-			Route::resource('galleries', 'galleryController');
+			Route::resource('posts', 'postController'); Route::resource('pages',
+			'pageController'); Route::resource('galleries', 'galleryController');
 
 });

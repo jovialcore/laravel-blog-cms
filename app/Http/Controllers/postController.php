@@ -84,7 +84,7 @@ return redirect()->route('posts.index');//remember that this is the route uri an
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(post $post)
     {
         //
     }
@@ -95,9 +95,11 @@ return redirect()->route('posts.index');//remember that this is the route uri an
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(post $post)
     {
-       
+         $categories =category::orderBy('name', 'ASC')->pluck('name', 'id');
+
+      return view('admin.post.edit', compact('categories', 'post'));
     }
 
     /**
@@ -107,9 +109,37 @@ return redirect()->route('posts.index');//remember that this is the route uri an
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, post $post)
     {
-      
+
+          $this->validate( $request, [
+            "thumbnail"=> 'required',
+            "title" => 'required|unique:posts,title,'.$post->id. ',id',//ignore this post id
+            "details" => 'required',
+            "category_id" => "required"
+        ],
+    [
+            'thumbnail' => 'Enter thumbnail url',
+            'title.required' => 'enter title my friend',
+            'title.unique' => 'title alreay exist, baba',
+            'details.required' => 'Man..enter details ain you getting the point??',
+            'category_id.required' => 'You must select a category o..na must G'
+            ]
+        );
+
+$post->user_id = Auth::id();
+$post->thumbnail = $request->thumbnail;
+$post->title = $request->title;
+$post->slug = str_slug($request->title);
+$post->sub_title = $request->sub_title;
+$post->details = $request->details;
+$post->is_published = $request->is_published;
+$post->save();
+
+$post->categories()->sync($request->category_id);
+
+Session::flash('msg', 'Post has been susccesfully updated');
+return redirect()->route('posts.index');
     }
 
     /**
@@ -118,7 +148,7 @@ return redirect()->route('posts.index');//remember that this is the route uri an
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(post $post)
     {
   
     }

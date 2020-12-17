@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\category;
+use App\post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class pageController extends Controller
 {
@@ -13,8 +17,8 @@ class pageController extends Controller
      */
     public function index()
     {
-        $categories = category::orderBy('id', 'DESC')->get();
-        return view('admin.category.index', compact('categories'));
+       $pages = post::orderBy('id', 'DESC')->where('post_type', 'page')->get();
+       return view('admin.pages.index', compact('pages'));
     }
 
     /**
@@ -24,10 +28,7 @@ class pageController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
-
-
-
+       return view('admin.pages.create');
     }
 
     /**
@@ -36,33 +37,34 @@ class pageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $this->validate($request, 
+
+       $this->validate($request, [
+            'thumbnail' => 'required',
+            'title' => 'required|unique:posts,title' .$id . ',id',
+            'details' => 'required',
+
+       ],
+
             [
+                'thumbnail.required' => "Bia thubmnail is very importan o guy man",
+                'title.required' => 'oga nah put title nah..kilode nah..oga simple title is that to hard to ask? nawah for you o',
+                'title.unique' =>"you dy weak me self..don't you see that that title has been registered , daddy or mummy? ..i go change am for you o",
 
-                'thumbnail' => 'required',
-                'name' => 'required|unique:categories'
-        ], 
+                'details.required' => 'Enter your details no vex',
+            ]
+   );
 
-        [
-            'thumbnail.required' => 'Enter thumbnail url',
-            'name.required' => 'Enter your name. Name field is empty',
-            'name.unique' => 'Category already exist'
-        ])
-
-        //lets work set session for this 
-
-        $cat = new category;
-        $cat->thumbnail = $request->thumbnail;
-        $cat->user_id= Auth::id();
-        $cat->name = $request->name;
-        $cat->slug = str_slug($request->slug);
-        $cat->is_published = $request->is_published;
-        $cat->save();
-
-        Session::flash('msg', 'Category has been created successfully');
-        return redirect()->route('categoriess.index');
+$page = post::findOrFail($id);
+$page->user_id = Auth::id();
+$page->thumbnail = $request->thumbnail;
+$page->title = $request->title;
+$page->slug = str_slug($request->title);
+$page->sub_title = $request->sub_title;
+$page->details = $request->details;
+$page->is_published = $request->is_published;
+$page->save();
 
     }
 

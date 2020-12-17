@@ -13,7 +13,7 @@
             <h1>{{ $post->title }}</h1>
             <h2 class="subheading">{{ $post->title }}</h2>
             <span class="meta">Posted by
-              <a href="#">{{ $post->title }}</a>
+              <a href="#">{{ $post->user->name }}</a>
               on {{ date('M d, Y', strtotime( $post->created_at )) }}</span>
           </div>
         </div>
