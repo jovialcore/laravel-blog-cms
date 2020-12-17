@@ -37,12 +37,12 @@ class pageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
 
        $this->validate($request, [
             'thumbnail' => 'required',
-            'title' => 'required|unique:posts,title' .$id . ',id',
+            'title' => 'required|unique:posts',
             'details' => 'required',
 
        ],
@@ -56,7 +56,7 @@ class pageController extends Controller
             ]
    );
 
-$page = post::findOrFail($id);
+$page = new post();
 $page->user_id = Auth::id();
 $page->thumbnail = $request->thumbnail;
 $page->title = $request->title;
@@ -64,8 +64,11 @@ $page->slug = str_slug($request->title);
 $page->sub_title = $request->sub_title;
 $page->details = $request->details;
 $page->is_published = $request->is_published;
+$page->post_type = 'page';
 $page->save();
 
+Session::flash('msg', 'page was successfuly created. Thamlk you..oshe');
+    return redirect()->route('pages.index');
     }
 
     /**
@@ -87,7 +90,9 @@ $page->save();
      */
     public function edit($id)
     {
-        //
+        $page  = post::findOrFail($id);
+
+        return view('admin.pages.edit', compact('page'));
     }
 
     /**
@@ -99,7 +104,36 @@ $page->save();
      */
     public function update(Request $request, $id)
     {
-        //
+    
+    $this->validate($request, [
+            'thumbnail' => 'required',
+            'title' => 'required|unique:posts,title,' .$id . ',id',
+            //where titleis equal to what it is and $id is == id // i mean for the post above . Thats what it is meant for
+            'details' => 'required',
+
+       ],
+
+            [
+                'thumbnail.required' => "Bia thubmnail is very importan o guy man",
+                'title.required' => 'oga nah put title nah..kilode nah..oga simple title is that to hard to ask? nawah for you o',
+                'title.unique' =>"you dy weak me self..don't you see that that title has been registered , daddy or mummy? ..i go change am for you o",
+
+                'details.required' => 'Enter your details no vex',
+            ]
+   );
+
+        $page = post::findOrFail($id);
+        $page->user_id = Auth::id();
+        $page->thumbnail = $request->thumbnail;
+        $page->title = $request->title;
+        $page->slug = str_slug($request->title);
+        $page->sub_title = $request->sub_title;
+        $page->details = $request->details;
+        $page->is_published = $request->is_published;
+        $page->save();
+
+        Session::flash('msg', 'page was successfuly created. Thamlk you..oshe');
+            return redirect()->route('pages.index');
     }
 
     /**
@@ -110,6 +144,11 @@ $page->save();
      */
     public function destroy($id)
     {
-        //
+        $page = post::findOrFail($id);
+        $page->delete();
+
+        Session::flash('del-msg', 'Page has been successfull
+             deleted. Thanks for banking with us');
+        return redirect()->route('pages.index');
     }
 }
