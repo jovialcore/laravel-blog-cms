@@ -124,7 +124,17 @@ Session::flash('msg', 'page was successfuly created. Thamlk you..oshe!!!');
      */
     public function destroy(gallery $gallery)
     {
+        //delete image from file
        
-  
+  Storage::delete('/public/galleries'. $gallery->image_url);
+
+  //also delte imaga name from DB
+
+  $gallery->delete();
+
+  Session::flash('del-msg', 'image was deleted successfully from db');
+
+  return redirect()->route('galleries.index');
+
     }
 }
