@@ -18,7 +18,7 @@
 
                             {!! Form::file('image_url[]', ['multiple' => 'multiple']) !!}
                             @if ($errors->has('image_url'))
-                                <span class="help-block">{!! $errors->has('image_url') !!}</span>@endif
+                                <span class="help-block" style="color:red;">*please select an image </span>@endif
                         </div>
                         {!! Form::submit('Upload',['class' => 'btn btn-sm btn-primary']) !!}
                     {!! Form::close() !!}

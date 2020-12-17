@@ -10,7 +10,7 @@ class gallery extends Model
     
      public function user () {
      	
-    	return	$this->belongsToMany(User::class);
+    	return	$this->belongsTo(User::class);
     	//many table gallery rows belongs to the table user rows
     }
 

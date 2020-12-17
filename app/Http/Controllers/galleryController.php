@@ -6,8 +6,9 @@ use App\gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
-class pageController extends Controller
+class galleryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -50,12 +51,12 @@ class pageController extends Controller
        //validateing image and saving the images . we will be looping because we will have multiple images
 foreach ($request->image_url as $image_url) {
     //lets have fil extenesioin
-    $imageNameWithExtension = $image_url->getClientOriginName();
+    $imageNameWithExtension = $image_url->getClientOriginalName();
 //lets only the file name
 
-    $imageName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+    $imageName = pathinfo($imageNameWithExtension, PATHINFO_FILENAME);
     // lest just get the image extension like .jpg or .img or so
-    $imageExtension = $image_url -> getClientOriginExtension();
+    $imageExtension = $image_url -> getClientOriginalExtension();
     // lets haev then image name and store in db
 
     $fileNameToSaveInDb = $imageName . '_'. time(). '.' .$imageExtension;
@@ -76,7 +77,7 @@ return redirect()->route('galleries.index');
 
 }
 
-Session::flash('msg', 'page was successfuly created. Thamlk you..oshe');
+Session::flash('msg', 'page was successfuly created. Thamlk you..oshe!!!');
     return redirect()->route('pages.index');
     }
 
@@ -99,9 +100,7 @@ Session::flash('msg', 'page was successfuly created. Thamlk you..oshe');
      */
     public function edit($id)
     {
-        $page  = post::findOrFail($id);
-
-        return view('admin.pages.edit', compact('page'));
+        
     }
 
     /**
@@ -111,38 +110,10 @@ Session::flash('msg', 'page was successfuly created. Thamlk you..oshe');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
     
-    $this->validate($request, [
-            'thumbnail' => 'required',
-            'title' => 'required|unique:posts,title,' .$id . ',id',
-            //where titleis equal to what it is and $id is == id // i mean for the post above . Thats what it is meant for
-            'details' => 'required',
-
-       ],
-
-            [
-                'thumbnail.required' => "Bia thubmnail is very importan o guy man",
-                'title.required' => 'oga nah put title nah..kilode nah..oga simple title is that to hard to ask? nawah for you o',
-                'title.unique' =>"you dy weak me self..don't you see that that title has been registered , daddy or mummy? ..i go change am for you o",
-
-                'details.required' => 'Enter your details no vex',
-            ]
-   );
-
-        $page = post::findOrFail($id);
-        $page->user_id = Auth::id();
-        $page->thumbnail = $request->thumbnail;
-        $page->title = $request->title;
-        $page->slug = str_slug($request->title);
-        $page->sub_title = $request->sub_title;
-        $page->details = $request->details;
-        $page->is_published = $request->is_published;
-        $page->save();
-
-        Session::flash('msg', 'page was successfuly created. Thamlk you..oshe');
-            return redirect()->route('pages.index');
+    
     }
 
     /**
@@ -151,13 +122,9 @@ Session::flash('msg', 'page was successfuly created. Thamlk you..oshe');
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(gallery $gallery)
     {
-        $page = post::findOrFail($id);
-        $page->delete();
-
-        Session::flash('del-msg', 'Page has been successfull
-             deleted. Thanks for banking with us');
-        return redirect()->route('pages.index');
+       
+  
     }
 }
