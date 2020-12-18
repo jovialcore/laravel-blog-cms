@@ -44,7 +44,15 @@ class blogController extends Controller
     		return \Response::view('webapp.errors.404', array(), 404);
     	}
 
+    }
 
+    public function page($slug) {
+        $page = post::where('slug', $slug)->where('post_type', 'page')->where('is_published', '1')->first();
+        if ($page) {
+            return view('webapp.page', compact('page'));
+        } else {
+            return \Response::view('webapp.errors.404', array(), 404);
+        }
     }
 }
 

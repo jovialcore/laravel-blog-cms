@@ -44,7 +44,7 @@
                                 <tr>
                                     <th scope="row">{{ $page->id }}</th>
                                     <td>{{ $page->title }}</td>
-                                    <td>{{ $page->user-name }}</td>
+                                    <td>{{ $page->user->name }}</td>
                                     <td>
                                         <a href="{{ route('pages.edit', $page->id) }}"
                                            class="btn btn-sm btn-primary">Edit</a>

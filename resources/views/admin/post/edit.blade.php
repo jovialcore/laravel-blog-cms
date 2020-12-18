@@ -75,7 +75,7 @@
 
             $('#category_id').select2({
                 placeholder: "Select categories"
-            }).val({!! json_encode($post->categories()->allRelatedIds()).trigger('change') !!});
+            }).val( {!! json_encode ($post->categories()->allRelatedIds()) !!}.trigger('change') );
         });
     </script>
 @endsection

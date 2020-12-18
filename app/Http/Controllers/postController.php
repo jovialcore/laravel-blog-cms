@@ -150,6 +150,10 @@ return redirect()->route('posts.index');
      */
     public function destroy(post $post)
     {
-  
+            $post->delete();
+            Session::flash('del-msg', 'post has been successfully deleted..cheers');
+
+            return redirect()->route('posts.index');
+
     }
 }
