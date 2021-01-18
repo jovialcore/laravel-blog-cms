@@ -1,7 +1,7 @@
 A CMS blog platform built wit laravel php .
 
 
-# **An aspect of this project is specifally for the shopify backend 2021 internship coding challenge**
+# **An aspect of this project is specifally for the shopify backend 2021 summer internship coding challenge**
 
 ## upload and delete with permissions 
 
