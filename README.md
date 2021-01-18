@@ -3,7 +3,7 @@ A CMS blog platform built wit laravel php .
 
 #**An aspect of this project is specifally for the shopify backend 2021 internship coding challenge**
 
-#upload and delete with permissions 
+# upload and delete with permissions 
 
 ***You will have to navigate to localhost:8000/admin/gallery to abe able to have user permissions, upload images and equally delete them.***
 
